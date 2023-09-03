@@ -10,11 +10,11 @@ export const Done = ({ deleteTask, changeStatus, tasks }) => {
 			taskList.push(<Task task={task.name} key={task.name} status={DONE} deleteTask={deleteTask} isChecked={true} changeStatus={changeStatus} />)
 		}
 	})
-	const isTitleVisible = taskList === 0;
+	const isTitleNotVisible = taskList.length === 0;
 
 	return (
 		<Container>
-			{isTitleVisible ? '' : <h2 className="subtitle">готово<sup>({taskList.length})</sup></h2>}
+			{isTitleNotVisible ? '' : <h2 className="subtitle">готово<sup>({taskList.length})</sup></h2>}
 			{taskList}
 		</Container>
 	)
