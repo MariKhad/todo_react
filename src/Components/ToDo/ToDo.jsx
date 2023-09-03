@@ -10,10 +10,11 @@ export const ToDo = ({ tasks, setTasks, deleteTask, changeStatus }) => {
 		}
 	})
 
+	const isTitleVisible = taskList > 0;
 
 	return (
 		<Container>
-			<h2 className="subtitle">план<sup>({taskList.length})</sup></h2>
+			{isTitleVisible ? <h2 className="subtitle">план<sup>({taskList.length})</sup></h2> : ''}
 			{taskList}
 		</Container>
 	)
