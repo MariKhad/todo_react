@@ -34,8 +34,15 @@ export const Task = ({ status, task, isChecked, tasks, setTasks }) => {
 	const deleteTask = (e) => {
 		let value = e.currentTarget.parentElement.children[1].value;
 		localStorage.removeItem(JSON.stringify(value));
-		let tempTasks = [...tasks];
-		tempTasks = tempTasks.filter(task => task.name !== value);
+		let tempTasks = [];
+		if (tasks.length > 1) {
+			let tempTasks = [...tasks];
+			tempTasks = tempTasks.filter(task => task.name !== value);
+			setTasks([...tempTasks]);
+		} else {
+			setTasks([])
+		}
+
 		setTasks([...tempTasks]);
 	}
 
