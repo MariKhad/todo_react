@@ -1,0 +1,15 @@
+.edit {
+	color: #0288D1;
+}
+
+.edit:hover {
+	color: #076da4;
+}
+
+.delete {
+	color: #ED6C02
+}
+
+.delete:hover {
+	color: #e7914b
+}

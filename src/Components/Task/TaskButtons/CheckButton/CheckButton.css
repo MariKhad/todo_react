@@ -1,0 +1,23 @@
+.button {
+	width: 24px;
+	height: 24px;
+	text-align: center;
+	background: transparent;
+	border: none;
+	cursor: pointer;
+	padding: 0;
+}
+
+.button:active {
+	transform: translate(2px, 2px);
+}
+
+.check {
+	color: #0288D1;
+	margin-left: 20px;
+
+}
+
+.check:hover {
+	color: #076da4;
+}

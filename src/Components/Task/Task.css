@@ -1,0 +1,53 @@
+.form_task {
+	display: flex;
+	justify-content: space-between;
+	font-family: Roboto;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 150%;
+	letter-spacing: 0.15px;
+	border: none;
+	width: 426px;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.42);
+}
+
+.button {
+	width: 24px;
+	height: 24px;
+	text-align: center;
+	background: transparent;
+	border: none;
+	cursor: pointer;
+	padding: 0;
+	margin: 0;
+}
+
+
+
+
+button:active {
+	transform: translate(2px, 2px);
+}
+
+.edit {
+	color: #0288D1;
+}
+
+.edit:hover {
+	color: #076da4;
+}
+
+.close {
+	color: #ED6C02
+}
+
+.close:hover {
+	color: #e7914b
+}
+
+
+
+.input:disabled {
+	background-color: white;
+}
