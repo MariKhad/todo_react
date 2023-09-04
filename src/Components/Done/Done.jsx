@@ -3,11 +3,11 @@ import { Task } from '../Task/Task'
 import { DONE } from '../../const';
 
 
-export const Done = ({ deleteTask, changeStatus, tasks }) => {
+export const Done = ({ deleteTask, changeStatus, tasks, setTasks }) => {
 	const taskList = [];
 	tasks.forEach(task => {
 		if (task.status === DONE) {
-			taskList.push(<Task task={task.name} key={task.name} status={DONE} deleteTask={deleteTask} isChecked={true} changeStatus={changeStatus} />)
+			taskList.push(<Task task={task.name} key={task.name} status={DONE} isChecked={true} setTasks={setTasks} tasks={tasks} />)
 		}
 	})
 	const isTitleNotVisible = taskList.length === 0;
