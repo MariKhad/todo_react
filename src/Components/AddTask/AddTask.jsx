@@ -9,9 +9,10 @@ export const AddTask = ({ setTasks, tasks }) => {
 		e.preventDefault();
 		const value = e.target.firstChild.value;
 		if (value.length > 3) {
-			localStorage.setItem(JSON.stringify(value), JSON.stringify({ 'name': value, 'status': TODO }));
+			let taskId = String(Date.now());
+			localStorage.setItem(JSON.stringify(taskId), JSON.stringify({ 'id': taskId, 'name': value, 'status': TODO }));
 			let tempTasks = [...tasks];
-			tempTasks.push({ 'name': value, 'status': TODO });
+			tempTasks.push({ 'id': taskId, 'name': value, 'status': TODO });
 			setTasks([...tempTasks]);
 			e.target.firstChild.value = '';
 		} else {

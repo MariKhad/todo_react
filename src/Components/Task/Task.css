@@ -51,3 +51,7 @@ button:active {
 .input:disabled {
 	background-color: white;
 }
+
+.form_task:has(>.input:disabled) {
+	border-bottom: none;
+}

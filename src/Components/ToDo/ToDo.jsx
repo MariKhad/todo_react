@@ -6,7 +6,7 @@ export const ToDo = ({ tasks, setTasks, deleteTask, changeStatus }) => {
 	const taskList = [];
 	tasks.forEach(task => {
 		if (task.status === TODO) {
-			taskList.push(<Task task={task.name} key={task.name} status={TODO} isChecked={false} tasks={tasks} setTasks={setTasks} />)
+			taskList.push(<Task task={task.name} key={task.id} id={task.id} status={TODO} isChecked={false} tasks={tasks} setTasks={setTasks} />)
 		}
 	})
 

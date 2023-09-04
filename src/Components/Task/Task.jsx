@@ -4,49 +4,54 @@ import './Task.css'
 import { DeleteButton } from "./TaskButtons/DeleteButton/DeleteButton";
 import { DONE, TODO } from "../../const";
 
-export const Task = ({ status, task, isChecked, tasks, setTasks }) => {
+export const Task = ({ status, task, isChecked, tasks, setTasks, id }) => {
 	const [isEditing, setIsEditing] = useState(false);
-	const [value, setValue] = useState('');
+	//const inputRef = useRef();
 
-	const editTask = (e) => {
-		setValue(e.currentTarget.previousSibling.value);
+	const editTask = () => {
 		setIsEditing(!isEditing)
-		console.log(isEditing);
 	}
 
 	const saveTask = (e) => {
-		localStorage.removeItem(JSON.stringify(value));
+		e.preventDefault();
+
 		let newValue = e.currentTarget.previousSibling.value;
-		localStorage.setItem(JSON.stringify(newValue), JSON.stringify({ 'name': newValue, 'status': TODO }));
-		let tempTasks = [...tasks];
-		console.log(tempTasks);
-		tempTasks.forEach(task => {
-			if (task.name === value) {
-				task.name = newValue;
-			}
-		});
-		console.log(tempTasks);
-		setTasks([...tempTasks]);
-		setValue(newValue);
-		setIsEditing(!isEditing);
+		if (newValue.length < 4) {
+			alert('Введите имя новой задачи в виде строки длиннее 3х символов');
+			console.log('косяк')
+		} else {
+			let taskId = String(e.currentTarget.previousSibling.dataset.id);
+			localStorage.setItem(JSON.stringify(taskId), JSON.stringify({ 'id': taskId, 'name': newValue, 'status': TODO }));
+			let tempTasks = [...tasks];
+			console.log(tempTasks);
+			tempTasks.forEach(task => {
+				if (task.id === taskId) {
+					task.name = newValue;
+				}
+			});
+			setTasks([...tempTasks]);
+			setIsEditing(!isEditing);
+		}
 	}
 
 	const deleteTask = (e) => {
-		let value = e.currentTarget.parentElement.children[1].value;
-		localStorage.removeItem(JSON.stringify(value));
+		let taskId = String(e.currentTarget.parentElement.children[1].dataset.id);
+		localStorage.removeItem(JSON.stringify(taskId));
 		let tempTasks = [...tasks];
-		tempTasks = tempTasks.filter(task => task.name !== value);
+		tempTasks = tempTasks.filter(task => task.id !== taskId);
 		setTasks([...tempTasks]);
 	}
 
 	const changeStatus = (e) => {
 		let value = e.currentTarget.nextElementSibling.value;
+		let taskId = String(e.currentTarget.nextElementSibling.dataset.id);
+
 		let tempTasks = [...tasks];
 		let status = e.currentTarget.checked ? DONE : TODO;
-		localStorage.setItem(JSON.stringify(value), JSON.stringify({ 'name': value, 'status': status }));
+		localStorage.setItem(JSON.stringify(taskId), JSON.stringify({ 'id': taskId, 'name': value, 'status': status }));
 
 		tempTasks.forEach((task) => {
-			if (task.name === value) {
+			if (task.id === taskId) {
 				task.status = status;
 			}
 		})
@@ -57,9 +62,9 @@ export const Task = ({ status, task, isChecked, tasks, setTasks }) => {
 
 
 	return (
-		<form className='form_task' >
+		<form className='form_task' onSubmit={saveTask}>
 			<input type='checkbox' defaultChecked={isChecked} onChange={changeStatus} />
-			<input id='add' type='text' className="input" placeholder="Имя новой задачи" defaultValue={task} disabled={!isEditing} />
+			<input type='text' className="input" placeholder="Имя новой задачи" data-id={id} defaultValue={task} disabled={!isEditing} />
 			{(status === TODO)
 				? <TaskButtons isEditing={isEditing} editTask={editTask} saveTask={saveTask} deleteTask={deleteTask} />
 				: <DeleteButton deleteTask={deleteTask} />}
