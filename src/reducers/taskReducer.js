@@ -14,7 +14,6 @@ export function taskReducer(state, action) {
 			localStorage.setItem(JSON.stringify(action.id), JSON.stringify({ 'id': action.id, 'name': action.name, 'status': TODO }));
 			let tempTasks = [...state];
 			tempTasks.push({ 'id': action.id, 'name': action.name, 'status': TODO });
-			console.log(tempTasks);
 			return tempTasks;
 		}
 		case 'save': {
