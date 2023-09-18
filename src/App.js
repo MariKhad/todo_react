@@ -5,27 +5,24 @@ import { AddTask } from './Components/AddTask/AddTask';
 import { Main } from './Components/Layout/Main/Main';
 import { useState } from 'react';
 import '@fontsource/roboto/400.css';
+import { initialTasks, } from './reducers/taskReducer';
+import { TaskProvider } from './Context';
 
 
 
 function App() {
 
-	const initialTasks = [];
-	for (let i = 0; i < localStorage.length; i++) {
-		let key = localStorage.key(i);
-		initialTasks.push(JSON.parse(localStorage.getItem(key)));
-	}
-
-	const [tasks, setTasks] = useState(initialTasks);
-
 	return (
-		<Main>
-			<h1 className='title'>todo</h1>
-			<AddTask setTasks={setTasks} tasks={tasks} />
-			<ToDo setTasks={setTasks} tasks={tasks} />
-			<Done setTasks={setTasks} tasks={tasks} />
-		</Main>
+		<TaskProvider>
+			<Main>
+				<h1 className='title'>todo</h1>
+				<AddTask />
+				<ToDo />
+				<Done />
+			</Main>
+		</TaskProvider>
 	);
 }
+
 
 export default App;

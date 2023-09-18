@@ -1,12 +1,14 @@
 import { Container } from '../Layout/Container/Container';
 import { Task } from '../Task/Task'
 import { TODO } from '../../const';
+import { useTask } from '../../Context';
 
-export const ToDo = ({ tasks, setTasks, deleteTask, changeStatus }) => {
+export const ToDo = () => {
+	let tasks = useTask();
 	const taskList = [];
 	tasks.forEach(task => {
 		if (task.status === TODO) {
-			taskList.push(<Task task={task.name} key={task.id} id={task.id} status={TODO} isChecked={false} tasks={tasks} setTasks={setTasks} />)
+			taskList.push(<Task task={task.name} key={task.id} id={task.id} status={TODO} isChecked={false} />)
 		}
 	})
 

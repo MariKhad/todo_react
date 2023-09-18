@@ -1,19 +1,21 @@
 import './AddTask.css';
-import { TODO } from '../../const.js';
 import { Container } from "../Layout/Container/Container";
+import { useTaskDispatch } from '../../Context';
 
 
-export const AddTask = ({ setTasks, tasks }) => {
+export const AddTask = () => {
+	let dispatch = useTaskDispatch();
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		const value = e.target.firstChild.value;
 		if (value.length > 3) {
 			let taskId = String(Date.now());
-			localStorage.setItem(JSON.stringify(taskId), JSON.stringify({ 'id': taskId, 'name': value, 'status': TODO }));
-			let tempTasks = [...tasks];
-			tempTasks.push({ 'id': taskId, 'name': value, 'status': TODO });
-			setTasks([...tempTasks]);
+			dispatch({
+				type: 'add',
+				name: value,
+				id: taskId,
+			});
 			e.target.firstChild.value = '';
 		} else {
 			alert('Введите имя новой задачи в виде строки длиннее 3х символов');

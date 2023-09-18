@@ -55,3 +55,10 @@ button:active {
 .form_task:has(>.input:disabled) {
 	border-bottom: none;
 }
+
+@media(max-width: 560px) {
+	.form_task {
+		width: 280px;
+	}
+
+}

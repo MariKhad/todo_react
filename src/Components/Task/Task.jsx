@@ -3,9 +3,11 @@ import { TaskButtons } from "./TaskButtons/TaskButtons";
 import './Task.css'
 import { DeleteButton } from "./TaskButtons/DeleteButton/DeleteButton";
 import { DONE, TODO } from "../../const";
+import { useTaskDispatch } from "../../Context";
 
-export const Task = ({ status, task, isChecked, tasks, setTasks, id }) => {
+export const Task = ({ status, task, isChecked, id }) => {
 	const [isEditing, setIsEditing] = useState(false);
+	let dispatch = useTaskDispatch();
 	//const inputRef = useRef();
 
 	const editTask = () => {
@@ -14,49 +16,38 @@ export const Task = ({ status, task, isChecked, tasks, setTasks, id }) => {
 
 	const saveTask = (e) => {
 		e.preventDefault();
-
 		let newValue = e.currentTarget.previousSibling.value;
 		if (newValue.length < 4) {
 			alert('Введите имя новой задачи в виде строки длиннее 3х символов');
-			console.log('косяк')
 		} else {
 			let taskId = String(e.currentTarget.previousSibling.dataset.id);
-			localStorage.setItem(JSON.stringify(taskId), JSON.stringify({ 'id': taskId, 'name': newValue, 'status': TODO }));
-			let tempTasks = [...tasks];
-			console.log(tempTasks);
-			tempTasks.forEach(task => {
-				if (task.id === taskId) {
-					task.name = newValue;
-				}
-			});
-			setTasks([...tempTasks]);
+			dispatch({
+				type: 'save',
+				name: newValue,
+				id: taskId,
+			})
 			setIsEditing(!isEditing);
 		}
 	}
 
 	const deleteTask = (e) => {
 		let taskId = String(e.currentTarget.parentElement.children[1].dataset.id);
-		localStorage.removeItem(JSON.stringify(taskId));
-		let tempTasks = [...tasks];
-		tempTasks = tempTasks.filter(task => task.id !== taskId);
-		setTasks([...tempTasks]);
+		dispatch({
+			type: 'delete',
+			id: taskId,
+		})
 	}
 
 	const changeStatus = (e) => {
 		let value = e.currentTarget.nextElementSibling.value;
 		let taskId = String(e.currentTarget.nextElementSibling.dataset.id);
-
-		let tempTasks = [...tasks];
 		let status = e.currentTarget.checked ? DONE : TODO;
-		localStorage.setItem(JSON.stringify(taskId), JSON.stringify({ 'id': taskId, 'name': value, 'status': status }));
-
-		tempTasks.forEach((task) => {
-			if (task.id === taskId) {
-				task.status = status;
-			}
-		})
-
-		setTasks([...tempTasks]);
+		dispatch({
+			type: 'change_status',
+			name: value,
+			status: status,
+			id: taskId,
+		});
 	}
 
 
